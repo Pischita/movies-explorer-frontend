@@ -24,7 +24,7 @@
 }
 
 .about-me__image{
-    height: 327px;
+    max-height: 327px;
 }
 
 .about-me__name {
