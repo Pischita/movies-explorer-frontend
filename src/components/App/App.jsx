@@ -4,6 +4,7 @@ import NavTab from '../NavTab/NavTab';
 import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
+import Footer from '../Footer/Footer';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <AboutProject></AboutProject>
       <Techs></Techs>
       <AboutMe></AboutMe>
+      <Footer></Footer>
 
       
       <main></main>

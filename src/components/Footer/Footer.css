@@ -1,0 +1,38 @@
+.footer {
+    padding-top: 79px;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
+.footer__text {
+    padding-bottom: 20px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #A0A0A0;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.footer__menu {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer__navigation-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.footer__navigation-link {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: right;
+    color: #000000;
+    text-decoration: none;
+}
+
