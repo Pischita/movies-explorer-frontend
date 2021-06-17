@@ -1,0 +1,51 @@
+.movie-card {}
+
+.movie-card__image{
+    width: 100%;
+}
+
+.movie-card__title-wrapper {
+    margin-top: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.movie-card__title {
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+}
+
+.movie-card__save-icon{
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-image: url('../../images/save-icon.svg');
+    background-position: center;
+    background-size: 200%;
+    border: 2px solid #FFFFFF;
+    background-color: white;
+    border-radius: 50px;
+}
+
+.movie-card__save-icon_active{
+    background-image: url('../../images/save-icon-active.svg');
+}
+
+
+.movie-card__duration {
+    margin: 0;
+    padding: 0;
+    margin-top: 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    line-height: 13px;
+    display: flex;
+    align-items: center;
+    color: #A0A0A0;
+}
