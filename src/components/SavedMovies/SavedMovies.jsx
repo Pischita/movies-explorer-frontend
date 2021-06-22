@@ -1,4 +1,4 @@
-import './Movies.css';
+import './SavedMovies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -6,17 +6,14 @@ import Preloader from '../Preloader/Preloader';
 import DownloadMore from '../DownloadMore/DownloadMore';
 import Footer from '../Footer/Footer';
 
-
-export default function Movies() {
+export default function SavedMovies() {
     return (
-        <div className="movies">
+        <div className="saved-movies">
             <Header></Header>
             <SearchForm></SearchForm>
             <MoviesCardList></MoviesCardList>
-            <DownloadMore></DownloadMore>
             <Footer></Footer>
             {/* <Preloader></Preloader> */}
         </div>
-        
     );
 }
