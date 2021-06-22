@@ -12,6 +12,10 @@ export default function Menu() {
                 </ul>
             </Route>
 
+            <Route path="/signup">
+
+            </Route>
+
             <Route path="*">
                 <div className="menu__wrapper_justify_between">
                     <ul className="menu__list">
