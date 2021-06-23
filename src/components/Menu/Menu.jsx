@@ -1,8 +1,15 @@
+import { useState } from 'react';
 import { Link, NavLink, Switch, Route } from 'react-router-dom';
 import './Menu.css';
 
 
 export default function Menu() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    function handleOpenMenu(){
+        setIsMenuOpen( ! isMenuOpen);
+    }
+
     return (<nav className="menu">
         <Switch>
             <Route exact path="/">
@@ -21,8 +28,8 @@ export default function Menu() {
             </Route>
 
             <Route path="*">
-                <div className="menu__outline">
-                    <div className="menu__wrapper_justify_between">
+                <div className={'menu__outline' + (isMenuOpen ? '' : ' menu__outline_open' )}>
+                    <div className={'menu__wrapper_justify_between' + (isMenuOpen ? '' : ' menu__wrapper_justify_between_open' )}>
                         <ul className="menu__list">
                             <li className="menu__item"><NavLink className="menu__link menu__link_color_black" activeClassName="menu__link_active" to="/movies">Фильмы</NavLink></li>
                             <li className="menu__item"><NavLink className="menu__link menu__link_color_black" to="/saved-movies">Сохраненные фильмы</NavLink></li>
@@ -32,10 +39,10 @@ export default function Menu() {
                         </ul>
                         
                     </div>
-                    <button className="menu__burger-close"></button>
+                    <button className="menu__burger-close" onClick={handleOpenMenu}></button>
                 </div>
                 <div className="menu__burger">
-                    <button className="menu__burger-button" >
+                    <button className="menu__burger-button" onClick={handleOpenMenu} >
                     </button>
                 </div>
 
