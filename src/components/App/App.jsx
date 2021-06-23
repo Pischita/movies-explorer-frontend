@@ -10,6 +10,7 @@ import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
+import Login from '../Login/Login';
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
         <Profile></Profile>
       </Route>
       <Route path="/signin">
-
+        <Login></Login>
       </Route>
       <Route path="/signup">
         <Register></Register>

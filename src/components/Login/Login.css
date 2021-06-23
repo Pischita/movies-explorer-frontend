@@ -1,11 +1,11 @@
-.register {
+.login {
     max-width: 396px;
     margin-left: auto;
     margin-right: auto;
     padding-top: 70px;
 }
 
-.register__title {
+.login__title {
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
@@ -13,13 +13,13 @@
     color: #000000;
 }
 
-.register__input-group {
+.login__input-group {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
 }
 
-.register__label {
+.login__label {
     font-style: normal;
     font-weight: normal;
     font-size: 10px;
@@ -27,7 +27,7 @@
     color: #A0A0A0;
 }
 
-.register__input {
+.login__input {
     margin-top: 10px;
     padding-top: 14px;
     padding-left: 15px;
@@ -44,9 +44,9 @@
     outline: none;
 }
 
-.register__submit {
+.login__submit {
     width: 100%;
-    margin-top: 82px;
+    margin-top: 179px;
     padding-top: 13px;
     padding-bottom: 15px;
     background: #3456F3;
@@ -61,14 +61,14 @@
     border: none;
 }
 
-.register__login-wrapper {
+.login__register-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 6px;
 }
 
-.register__login-text {
+.login__register-text {
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -77,7 +77,7 @@
     color: #A0A0A0;
 }
 
-.register__login-link {
+.login__register-link {
     font-style: normal;
     font-weight: normal;
     font-size: 14px;

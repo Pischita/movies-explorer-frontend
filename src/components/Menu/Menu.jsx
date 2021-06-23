@@ -16,6 +16,10 @@ export default function Menu() {
 
             </Route>
 
+            <Route path="/signin">
+
+            </Route>
+
             <Route path="*">
                 <div className="menu__wrapper_justify_between">
                     <ul className="menu__list">
