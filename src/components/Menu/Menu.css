@@ -8,6 +8,14 @@
     align-items: center;
 }
 
+.menu__main-list {
+    margin: 0;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+}
+
 .menu__list {
     margin: 0;
     list-style: none;
@@ -15,8 +23,9 @@
     gap: 30px;
 }
 
+
 .menu__list_align_right {
-    justify-content: flex-end;
+    
 }
 
 .menu__link {
@@ -26,6 +35,10 @@
     line-height: 16px;
     color: #FFFFFF;
     text-decoration: none;
+}
+
+.menu__item_mobile{
+    display: none;
 }
 
 .menu__link_active{
@@ -160,6 +173,10 @@
     .menu__list{
         flex-direction: column;
         align-items: center;
+    }
+
+    .menu__item_mobile{
+        display: block;
     }
 
     .menu__burger{

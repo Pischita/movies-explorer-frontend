@@ -2,3 +2,7 @@
     padding-left: 70px;
     padding-right: 70px;
 }
+
+.saved-movies__empty-block{
+    height: 140px;
+}

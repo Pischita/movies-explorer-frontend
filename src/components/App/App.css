@@ -1,10 +1,10 @@
-.promo{
+.promo {
     background: #073042;
     padding-left: 70px;
     padding-right: 70px;
 }
 
-.promo__banner{
+.promo__banner {
     min-height: 524px;
     background-image: url('../../images/landing-logo.svg');
     background-repeat: no-repeat;
@@ -14,7 +14,7 @@
     align-items: center;
 }
 
-.promo__title{
+.promo__title {
     font-style: normal;
     font-weight: normal;
     font-size: 50px;
@@ -23,4 +23,15 @@
     letter-spacing: -0.04em;
     color: #FFFFFF;
     max-width: 730px;
+}
+
+@media screen and (max-width: 768px) {
+    .promo {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .promo__banner {
+        min-height: 780px;    
+    }
 }

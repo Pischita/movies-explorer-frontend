@@ -22,7 +22,11 @@
     margin-top: 66px;
     display: flex;
     justify-content: space-between;
-    gap: 270px;
+    gap: 49px;
+}
+
+.about-me__content{
+    max-width: 600px;
 }
 
 .about-me__image{
@@ -50,6 +54,9 @@
 }
 
 .about-me__description {
+    margin: 0;
+    padding: 0;
+    margin-top: 26px;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
@@ -120,4 +127,59 @@
     background-size: 60%;
     background-position-y: center;
     background-position-x: left;
+}
+
+@media screen and (max-width: 1279px) {
+    .about-me {
+        padding-top: 90px;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-bottom: 60px;
+    }
+
+    .about-me__name {      
+        font-size: 40px;
+        line-height: 40px;
+    }
+
+    .about-me__image{
+        max-height: 307px;
+    }
+
+    .about-me__profession {
+        font-size: 12px;
+        line-height: 18px;
+    }
+
+    .about-me__description{
+        font-size: 12px;
+        line-height: 18px; 
+        margin-top: 20px;  
+    }
+
+    .about-me__social-networks{
+        margin-top: 87px;
+    }
+
+    .about-me__portfolio-title{
+        margin-top: 77px;
+        
+    }
+
+    .about-me__portfolio-item{
+        font-size: 28px;    
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    .about-me__image{
+        order: -1;
+    }
+
+    .about-me__content-wrapper {
+        flex-wrap: wrap;
+        
+    }
+    
 }
