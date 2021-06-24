@@ -80,7 +80,7 @@
     color: #000000;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1279px) {
     .techs {
         padding-top: 90px;
         padding-left: 50px;
@@ -107,5 +107,39 @@
         font-size: 12px;
         line-height: 15px;
         min-width: 84px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .techs {
+        padding-top: 58px;
+        padding-left: 18px;
+        padding-right: 18px;
+        padding-bottom: 70px;
+    }
+
+    .techs__title {
+        font-size: 18px;
+        line-height: 22px;
+        padding-bottom: 28px;
+    }
+
+    .techs__caption {
+        margin-top: 60px;
+        font-size: 30px;
+        line-height: 36px;
+    }
+
+    .techs__description {
+        margin-top: 23px;
+        font-size: 11px;
+        line-height: 16px;
+    }
+
+    .techs__list {
+        margin-top: 50px;
+        padding-left: 52px;
+        padding-right: 52px;
+        gap: 8px;
     }
 }

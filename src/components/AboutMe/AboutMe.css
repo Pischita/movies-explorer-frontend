@@ -25,12 +25,12 @@
     gap: 49px;
 }
 
-.about-me__content{
+.about-me__content {
     max-width: 600px;
 }
 
-.about-me__image{
-    max-height: 327px;
+.about-me__image {
+    max-width: 327px;
 }
 
 .about-me__name {
@@ -65,7 +65,7 @@
     mix-blend-mode: normal;
 }
 
-.about-me__social-networks{
+.about-me__social-networks {
     margin-top: 99px;
     list-style: none;
     display: flex;
@@ -73,7 +73,7 @@
     padding: 0;
 }
 
-.about-me__social-networks-link{
+.about-me__social-networks-link {
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -82,7 +82,7 @@
     text-decoration: none;
 }
 
-.about-me__portfolio-title{
+.about-me__portfolio-title {
     margin: 0;
     padding: 0;
     margin-top: 92px;
@@ -94,14 +94,14 @@
     mix-blend-mode: normal;
 }
 
-.about-me__portfolio-list{
+.about-me__portfolio-list {
     list-style: none;
     padding: 0;
     margin: 0;
     margin-top: 50px;
 }
 
-.about-me__portfolio-item{
+.about-me__portfolio-item {
     margin-top: 10px;
     font-style: normal;
     font-weight: normal;
@@ -114,11 +114,11 @@
     justify-content: space-between;
 }
 
-.about-me__portfolio-item:not(:last-child){
+.about-me__portfolio-item:not(:last-child) {
     border-bottom: 1px solid #E8E8E8;
 }
 
-.about-me__portfolio-link{
+.about-me__portfolio-link {
     display: block;
     width: 29px;
     height: 60px;
@@ -137,13 +137,13 @@
         padding-bottom: 60px;
     }
 
-    .about-me__name {      
+    .about-me__name {
         font-size: 40px;
         line-height: 40px;
     }
 
-    .about-me__image{
-        max-height: 307px;
+    .about-me__image {
+        max-width: 307px;
     }
 
     .about-me__profession {
@@ -151,35 +151,81 @@
         line-height: 18px;
     }
 
-    .about-me__description{
+    .about-me__description {
         font-size: 12px;
-        line-height: 18px; 
-        margin-top: 20px;  
+        line-height: 18px;
+        margin-top: 20px;
     }
 
-    .about-me__social-networks{
+    .about-me__social-networks {
         margin-top: 87px;
     }
 
-    .about-me__portfolio-title{
+    .about-me__portfolio-title {
         margin-top: 77px;
-        
     }
 
-    .about-me__portfolio-item{
-        font-size: 28px;    
+    .about-me__portfolio-item {
+        font-size: 28px;
     }
 }
 
 
 @media screen and (max-width: 767px) {
-    .about-me__image{
+    .about-me {
+        padding-top: 70px;
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-bottom: 70px;
+    }
+
+    .about-me__title {
+        font-size: 18px;
+        line-height: 22px;
+        padding-bottom: 28px;
+    }
+
+    .about-me__image {
         order: -1;
+        width: 100%;
     }
 
     .about-me__content-wrapper {
         flex-wrap: wrap;
-        
+        gap: 40px;
     }
-    
+
+    .about-me__content-wrapper {
+        margin-top: 60px;
+    }
+
+    .about-me__name {
+        font-size: 30px;
+        line-height: 36px;
+    }
+
+    .about-me__social-networks {
+        margin-top: 10px;
+    }
+
+    .about-me__portfolio-title {
+        margin-top: 55px;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .about-me__portfolio-list {
+        margin-top: 40px;
+    }
+
+    .about-me__portfolio-item {
+        margin-top: 20px;
+        font-size: 18px;
+        line-height: 28px;
+    }
+
+    .about-me__portfolio-link{
+        height: 28px;
+        width: 18px;
+    }
 }

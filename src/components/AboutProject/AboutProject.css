@@ -1,11 +1,11 @@
-.about-project{
+.about-project {
     padding-top: 110px;
     padding-left: 70px;
     padding-right: 70px;
-    
+
 }
 
-.about-project__title{
+.about-project__title {
     padding: 0;
     padding-bottom: 23px;
     margin: 0;
@@ -18,14 +18,14 @@
     border-bottom: 1px solid #000000;
 }
 
-.about-project__text-wrapper{
+.about-project__text-wrapper {
     padding-top: 70px;
     display: flex;
-    gap: 40px; 
+    gap: 40px;
     margin-bottom: 110px;
 }
 
-.about-project__step-title{
+.about-project__step-title {
     margin: 0;
     padding: 0;
     font-style: normal;
@@ -36,7 +36,7 @@
     color: #000000;
 }
 
-.about-project__step-description{
+.about-project__step-description {
     margin: 0;
     margin-top: 26px;
     padding: 0;
@@ -47,12 +47,12 @@
     color: #000000;
 }
 
-.about-project__progress{
+.about-project__progress {
     display: flex;
     min-height: 36px;
 }
 
-.about-project__progress-step{
+.about-project__progress-step {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,17 +64,17 @@
     color: #000000;
 }
 
-.about-project__progress-first-step{
+.about-project__progress-first-step {
     flex-grow: 1;
-    background-color: #2BE080;    
+    background-color: #2BE080;
 }
 
-.about-project__progress-second-step{
+.about-project__progress-second-step {
     flex-grow: 4;
     background-color: #F2F2F2;
 }
 
-.about-project__progress-step-description{
+.about-project__progress-step-description {
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -84,22 +84,65 @@
     background-color: transparent;
 }
 
-@media screen and (max-width: 768px) {
-    .about-project{
+@media screen and (max-width: 1279px) {
+    .about-project {
         padding-top: 90px;
         padding-left: 50px;
         padding-right: 50px;
         padding-bottom: 85px;
-    }   
-    
-    .about-project__text-wrapper{
+    }
+
+    .about-project__text-wrapper {
         margin-bottom: 95px;
     }
 
-    .about-project__step-description{
+    .about-project__step-description {
         margin-top: 22px;
         font-size: 12px;
         line-height: 18px;
     }
-    
+
+}
+
+@media screen and (max-width: 767px) {
+    .about-project {
+        padding-top: 70px;
+        padding-left: 18px;
+        padding-right: 18px;
+        padding-bottom: 70px;
+    }
+
+    .about-project__title {
+        font-size: 18px;
+        line-height: 22px;
+        padding-bottom: 28px;
+    }
+
+    .about-project__text-wrapper {
+        padding-top: 60px;
+        flex-direction: column;
+        gap: 57px;
+        margin-bottom: 60px;
+    }
+
+    .about-project__step-title {
+        font-size: 18px;
+        line-height: 22px;
+
+    }
+
+    .about-project__step-description {
+        margin-top: 16px;
+        font-size: 11px;
+        line-height: 16px;
+    }
+
+    .about-project__progress {
+        min-height: 35px;    
+    }
+
+    .about-project__progress-step {
+        font-size: 11px;
+        line-height: 13px;
+    }
 }

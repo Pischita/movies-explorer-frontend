@@ -49,7 +49,7 @@
 }
 
 @media screen and (max-width: 1279px) {
-    .footer {        
+    .footer {
         padding-left: 37px;
         padding-right: 24px;
     }
@@ -61,5 +61,45 @@
 
     .footer__menu {
         margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .footer {
+        padding-top: 60px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .footer__text {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .footer__navigation-list {
+        padding: 0;
+        margin: 0;
+        gap: 12px;
+    }
+
+    .footer__menu {
+        margin-top: 20px;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .footer__navigation-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer__year {
+        order: 1;
+    }
+
+    .footer__navigation-link {
+        font-size: 12px;
+        line-height: 15px;
     }
 }
