@@ -1,7 +1,6 @@
 .footer {
     padding-top: 79px;
-    padding-left: 70px;
-    padding-right: 70px;
+    padding-bottom: 20px;
 }
 
 .footer__text {
@@ -20,6 +19,7 @@
 .footer__menu {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .footer__year {
@@ -50,8 +50,7 @@
 
 @media screen and (max-width: 1279px) {
     .footer {
-        padding-left: 37px;
-        padding-right: 24px;
+        
     }
 
     .footer__navigation-list {
@@ -67,8 +66,7 @@
 @media screen and (max-width: 767px) {
     .footer {
         padding-top: 60px;
-        padding-left: 10px;
-        padding-right: 10px;
+        
     }
 
     .footer__text {

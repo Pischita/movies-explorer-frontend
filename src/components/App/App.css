@@ -26,6 +26,11 @@
     max-width: 730px;
 }
 
+.promo__footer{
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
 @media screen and (max-width: 1279px) {
     .promo {
         padding-left: 30px;
@@ -34,6 +39,11 @@
 
     .promo__banner {
         min-height: 780px;
+    }
+
+    .promo__footer{
+        padding-left: 37px;
+        padding-right: 24px;
     }
 }
 
@@ -53,5 +63,11 @@
         text-align: center;
         letter-spacing: -0.04em;
         color: #FFFFFF;
+    }
+
+    .promo__footer{
+        padding-left: 10px;
+        padding-right: 10px;
+
     }
 }

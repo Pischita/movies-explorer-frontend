@@ -6,3 +6,20 @@
     column-gap: 20px;
     row-gap: 32px;
 }
+
+@media screen and (max-width: 1279px) {
+    .movies-card-list{
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 30px;
+        row-gap: 36px;
+    }
+    
+}
+
+@media screen and (max-width: 767px) {
+    .movies-card-list{
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 20px;
+    }
+    
+}

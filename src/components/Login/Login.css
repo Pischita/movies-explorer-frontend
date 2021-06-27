@@ -85,3 +85,13 @@
     text-align: center;
     color: #3456F3;
 }
+
+@media screen and (max-width: 1279px){
+    .login{
+        padding-left: 30px;
+        padding-right: 30px;
+    }   
+    
+}
+
+

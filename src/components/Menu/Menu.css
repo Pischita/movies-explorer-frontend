@@ -187,7 +187,7 @@
 @media screen and (max-width: 767px) {
 
     .menu__main-list {
-        gap: 14px;
+        gap: 24px;
     }
 
     .menu__link {
@@ -201,5 +201,12 @@
         padding-top: 5px;
         padding-right: 12px;
         padding-bottom: 5px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+
+    .menu__wrapper_justify_between{
+        width: 100%;
     }
 }

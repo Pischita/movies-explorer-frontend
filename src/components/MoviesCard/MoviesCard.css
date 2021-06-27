@@ -1,4 +1,9 @@
-.movie-card {}
+.movie-card {
+    background: #FDFDFD;
+    box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    padding-bottom: 14px;
+}
 
 .movie-card__image{
     width: 100%;
@@ -25,11 +30,18 @@
     height: 16px;
     background-repeat: no-repeat;
     background-image: url('../../images/save-icon.svg');
-    background-position: center;
-    background-size: 200%;
+    background-position: 48% 31%;
+    background-size: 250%;
     border: 2px solid #FFFFFF;
     background-color: white;
     border-radius: 50px;
+    box-shadow: 0px 0px 5px 0px rgb(0 0 0 / 40%);
+}
+
+.movie-card__save-icon:hover{
+    cursor: pointer;
+    opacity: 0.7;
+
 }
 
 .movie-card__save-icon_active{

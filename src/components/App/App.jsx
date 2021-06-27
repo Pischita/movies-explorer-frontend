@@ -16,45 +16,46 @@ import NotFound from '../NotFound/NotFound';
 function App() {
   return (
     <>
-    <Switch>
-      <Route exact path="/">
-        <div className="promo">
-          <Header></Header>
-          <div className="promo__banner">
-            <h1 className="promo__title">Учебный проект студента факультета Веб-разработки.</h1>
+      <Switch>
+        <Route exact path='/'>
+          <div className='promo'>
+            <Header></Header>
+            <div className='promo__banner'>
+              <h1 className='promo__title'>
+                Учебный проект студента факультета Веб-разработки.
+              </h1>
+            </div>
           </div>
-        </div>
-        <NavTab></NavTab>
-        <main>
-          <AboutProject></AboutProject>
-          <Techs></Techs>
-          <AboutMe></AboutMe>
-        </main>
-        <Footer></Footer>
-      </Route>
-      <Route path="/movies">
-        <Movies></Movies>
-      </Route>
-      <Route path="/saved-movies">
-        <SavedMovies></SavedMovies>
+          <NavTab></NavTab>
+          <main>
+            <AboutProject></AboutProject>
+            <Techs></Techs>
+            <AboutMe></AboutMe>
+          </main>
+          <div className='promo__footer'>
+            <Footer ></Footer>
+          </div>
+        </Route>
+        <Route path='/movies'>
+          <Movies></Movies>
+        </Route>
+        <Route path='/saved-movies'>
+          <SavedMovies></SavedMovies>
+        </Route>
+        <Route path='/profile'>
+          <Profile></Profile>
+        </Route>
+        <Route path='/signin'>
+          <Login></Login>
+        </Route>
+        <Route path='/signup'>
+          <Register></Register>
+        </Route>
 
-      </Route>
-      <Route path="/profile">
-        <Profile></Profile>
-      </Route>
-      <Route path="/signin">
-        <Login></Login>
-      </Route>
-      <Route path="/signup">
-        <Register></Register>
-      </Route>
-
-      <Route path="*">
-        <NotFound></NotFound>
-      </Route>
-
+        <Route path='*'>
+          <NotFound></NotFound>
+        </Route>
       </Switch>
-
     </>
   );
 }
