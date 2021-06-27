@@ -29,17 +29,17 @@ export default function Register(){
             <form className="register__form" action="" method="get">
                 <div className="register__input-group">
                     <label className="register__label" htmlFor="name" >Имя</label>
-                    <input className="register__input" id="name" type="text" name="name" value={name} onChange={handleNameChange} />
+                    <input className="register__input" id="name" type="text" name="name" value={name} onChange={handleNameChange} required />
                 </div>
 
                 <div className="register__input-group">
                     <label className="register__label" htmlFor="email" >E-mail</label>
-                    <input className="register__input" id="email" type="email" name="email" value={email} onChange={handleEmailChange} />
+                    <input className="register__input" id="email" type="email" name="email" value={email} onChange={handleEmailChange} required />
                 </div>
 
                 <div className="register__input-group">
                     <label className="register__label" htmlFor="password" >Password</label>
-                    <input className="register__input" id="password" type="password" name="password" value={password} onChange={handlePasswordChange} />
+                    <input className="register__input" id="password" type="password" name="password" value={password} onChange={handlePasswordChange} required />
                 </div>
 
                 <button className="register__submit" type="submit">Зарегистрироваться</button>

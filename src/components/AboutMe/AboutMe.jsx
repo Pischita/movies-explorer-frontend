@@ -18,7 +18,7 @@ export default function AboutMe(){
                         <li><a className="about-me__social-networks-link" href="#github">Github</a></li>
                     </ul>
                 </div>
-                <img src={photo} alt="" className="about-me__image" />
+                <img src={photo} alt="Моя фотография" className="about-me__image" />
             </div>
             <h3 className="about-me__portfolio-title">Портфолио</h3>
             <ul className="about-me__portfolio-list">

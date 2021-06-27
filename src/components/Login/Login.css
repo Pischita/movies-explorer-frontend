@@ -59,6 +59,14 @@
     color: #FFFFFF;
     text-align: center;
     border: none;
+    border: 1px solid transparent;
+}
+
+.login__submit:hover {
+    cursor: pointer;
+    color: #3456F3;
+    background-color: #FFFFFF;
+    border: 1px solid #3456F3;
 }
 
 .login__register-wrapper {

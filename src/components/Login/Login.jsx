@@ -23,12 +23,12 @@ export default function Login() {
                
                 <div className="login__input-group">
                     <label className="login__label" htmlFor="email" >E-mail</label>
-                    <input className="login__input" id="email" type="email" name="email" value={email} onChange={handleEmailChange} />
+                    <input className="login__input" id="email" type="email" name="email" value={email} onChange={handleEmailChange} required />
                 </div>
 
                 <div className="login__input-group">
                     <label className="login__label" htmlFor="password" >Password</label>
-                    <input className="login__input" id="password" type="password" name="password" value={password} onChange={handlePasswordChange} />
+                    <input className="login__input" id="password" type="password" name="password" value={password} onChange={handlePasswordChange} required />
                 </div>
 
                 <button className="login__submit" type="submit">Войти</button>

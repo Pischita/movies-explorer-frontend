@@ -42,7 +42,13 @@
     color: #FFFFFF;
     border:none;
     outline: none;
+}
 
+.search-form__button:hover{
+    cursor: pointer;
+    color: #3456F3;
+    background: #FFFFFF;
+    border: 1px solid #3456F3;
 }
 
 .search-form__filter{
