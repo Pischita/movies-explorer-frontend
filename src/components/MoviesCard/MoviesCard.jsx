@@ -1,10 +1,8 @@
 import './MoviesCard.css';
-import moviePicture from '../../images/movie-1.jpg';
 
-export default function MoviesCard ({ name ='', saved = false, duration='', enableDelete}){
+export default function MoviesCard ({ name ='', saved = false, duration='', enableDelete, image}){
 
     let iconType = '';
-    console.log(enableDelete);
     if(enableDelete === true) {
         iconType = 'movie-card__icon_type_delete'; 
     }else if (saved){
@@ -15,7 +13,7 @@ export default function MoviesCard ({ name ='', saved = false, duration='', enab
 
     return(
         <div className="movie-card">
-            <img className="movie-card__image" src={moviePicture} alt="{name}" />
+            <img className="movie-card__image" src={image} alt={name} />
             <div className="movie-card__title-wrapper">
                 <h2 className="movie-card__title">{name}</h2>
                 <button className={'movie-card__icon ' + iconType }></button>

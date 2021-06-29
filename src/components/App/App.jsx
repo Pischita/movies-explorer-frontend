@@ -12,8 +12,61 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [searchString, setSearchString] = useState('');
+
+  useEffect(() => {
+    fetch('https://api.nomoreparties.co/beatfilm-movies')
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          return Promise.reject(res.statusText);
+        }
+      })
+      .then((data) => {
+        const movies = data.map((item) => {
+          return {
+            id: item.id,
+            nameRU: item.nameRU,
+            nameEN: item.nameEN,
+            movieId: item.id,
+            thumbnail: '',
+            trailer: '',
+            image: 'https://api.nomoreparties.co' + item.image.url,
+            description: item.description,
+            year: item.year,
+            duration: item.duration,
+            director: item.director,
+            country: item.country,
+          };
+        });
+        setMovies(movies);
+        setFilteredMovies(movies);
+      });
+  }, []);
+
+  
+  useEffect(()=>{
+    const arr = movies.filter(item =>{
+      return item.nameRU.toLowerCase().includes(searchString.toLowerCase() );
+    });
+    setFilteredMovies( arr );
+  }, [searchString, movies])
+
+  function handleChangeSearchString(evt) {
+    console.log(evt.target.value);
+    setSearchString(evt.target.value);
+  }
+
+
+
+  
+  
   return (
     <>
       <Switch>
@@ -33,11 +86,16 @@ function App() {
             <AboutMe></AboutMe>
           </main>
           <div className='promo__footer'>
-            <Footer ></Footer>
+            <Footer></Footer>
           </div>
         </Route>
         <Route path='/movies'>
-          <Movies enableDelete={false}></Movies>
+          <Movies
+            movies={filteredMovies}
+            onChangeSearchString={handleChangeSearchString}
+            searchString={searchString}
+            enableDelete={false}
+          ></Movies>
         </Route>
         <Route path='/saved-movies'>
           <SavedMovies enableDelete={true}></SavedMovies>

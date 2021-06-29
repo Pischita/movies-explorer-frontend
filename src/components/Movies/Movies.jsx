@@ -7,12 +7,12 @@ import DownloadMore from '../DownloadMore/DownloadMore';
 import Footer from '../Footer/Footer';
 
 
-export default function Movies() {
+export default function Movies({movies, searchString, onChangeSearchString}) {
     return (
         <div className="movies">
             <Header></Header>
-            <SearchForm></SearchForm>
-            <MoviesCardList></MoviesCardList>
+            <SearchForm searchString={searchString} onChangeSearchString={onChangeSearchString}></SearchForm>
+            <MoviesCardList movies={movies}></MoviesCardList>
             <DownloadMore></DownloadMore>
             <Footer></Footer>
             {/* <Preloader></Preloader> */}
