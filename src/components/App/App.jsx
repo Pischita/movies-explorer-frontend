@@ -37,10 +37,10 @@ function App() {
           </div>
         </Route>
         <Route path='/movies'>
-          <Movies></Movies>
+          <Movies enableDelete={false}></Movies>
         </Route>
         <Route path='/saved-movies'>
-          <SavedMovies></SavedMovies>
+          <SavedMovies enableDelete={true}></SavedMovies>
         </Route>
         <Route path='/profile'>
           <Profile></Profile>

@@ -10,7 +10,7 @@ export default function SavedMovies() {
         <div className="saved-movies">
             <Header></Header>
             <SearchForm></SearchForm>
-            <MoviesCardList></MoviesCardList>
+            <MoviesCardList enableDelete={true}></MoviesCardList>
             <div className="saved-movies__empty-block"></div>
             <Footer></Footer>
             {/* <Preloader></Preloader> */}
