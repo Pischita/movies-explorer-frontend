@@ -2,12 +2,13 @@ import './Register.css';
 import Header from '../Header/Header';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import {register} from '../../utils/MainApi';
 
 
-export default function Register(){
-    const [name, setName] = useState('Виталий');
+export default function Register({onRegisterSubmit}){
+    const [name, setName] = useState('Иван');
     const [email, setEmail] = useState('aaib@tut.by');
-    const [password, setPassword] = useState('');
+    const [password, setPassword] = useState('123');
 
     function handleNameChange(evt){
         setName(evt.target.value);
@@ -21,12 +22,24 @@ export default function Register(){
         setPassword(evt.target.value);
     }
 
+    function handleSubmit(evt){
+        evt.preventDefault();
+        console.log(evt);        
+        register(name, email, password)
+          .then((user)=>{
+              console.log(user);
+          }).catch(err=>{
+            console.log(err);
+          });
+    }
+
+
 
     return(
         <div className="register">
             <Header></Header>
             <h1 className="register__title">Добро пожаловать!</h1>
-            <form className="register__form" action="" method="get">
+            <form className="register__form" action="" method="POST" onSubmit={handleSubmit}>
                 <div className="register__input-group">
                     <label className="register__label" htmlFor="name" >Имя</label>
                     <input className="register__input" id="name" type="text" name="name" value={name} onChange={handleNameChange} required />

@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, NavLink, Switch, Route } from 'react-router-dom';
 import './Menu.css';
-
+import { CurrentUserContext } from '../../contexts/CurrentUserContext'; 
 
 export default function Menu() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const currentUser = useContext(CurrentUserContext);
 
     function handleOpenMenu(){
         setIsMenuOpen( ! isMenuOpen);
@@ -36,7 +37,7 @@ export default function Menu() {
                             <li className="menu__item"><NavLink className="menu__link menu__link_color_black" to="/saved-movies">Сохраненные фильмы</NavLink></li>
                         </ul>
                         <ul className="menu__list">
-                            <li className="menu__item"><Link className="menu__link-user menu__link_color_black" to="/profile">Аккаунт<span className="menu__user-icon"></span></Link></li>
+                            <li className="menu__item"><Link className="menu__link-user menu__link_color_black" to="/profile">{currentUser.name}<span className="menu__user-icon"></span></Link></li>
                         </ul>
                         
                     </div>

@@ -2,10 +2,13 @@ import './Login.css';
 import Header from '../Header/Header';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import * as mainApi from '../../utils/MainApi';
+import { useHistory } from 'react-router-dom';
 
-export default function Login() {
-    const [email, setEmail] = useState('aaib@tut.by');
+export default function Login({onSubmit}) {
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const history = useHistory();
 
     function handleEmailChange(evt){
         setEmail(evt.target.value);
@@ -15,11 +18,28 @@ export default function Login() {
         setPassword(evt.target.value);
     } 
 
+    function handleSubmit(evt){
+        evt.preventDefault();
+        mainApi.login(email, password).then((data) =>{
+            console.log(data);
+            if(data.jwt){
+                setEmail('');
+                setPassword('');
+                localStorage.setItem('jwt', data.jwt);
+                onSubmit();
+                history.push('/movies');
+            }
+          }).catch(err =>{
+            console.log(err);
+          });
+       
+    }
+
     return(
         <div className="login">
             <Header></Header>
             <h1 className="login__title">Добро пожаловать!</h1>
-            <form className="login__form" action="" method="get">
+            <form className="login__form" action="" method="post" onSubmit={handleSubmit}>
                
                 <div className="login__input-group">
                     <label className="login__label" htmlFor="email" >E-mail</label>

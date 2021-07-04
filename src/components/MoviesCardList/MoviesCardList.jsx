@@ -9,7 +9,7 @@ export default function MoviesCardList({ movies, enableDelete }) {
           key={movie.id}
           name={movie.nameRU}
           duration={movie.duration}
-          saved={true}
+          saved={movie.saved}
           enableDelete={enableDelete}
           image={movie.image}
         ></MovieCard>

@@ -5,12 +5,12 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
-export default function SavedMovies() {
+export default function SavedMovies({movies}) {
     return (
         <div className="saved-movies">
             <Header></Header>
             <SearchForm></SearchForm>
-            <MoviesCardList enableDelete={true}></MoviesCardList>
+            <MoviesCardList movies={movies} enableDelete={true}></MoviesCardList>
             <div className="saved-movies__empty-block"></div>
             <Footer></Footer>
             {/* <Preloader></Preloader> */}

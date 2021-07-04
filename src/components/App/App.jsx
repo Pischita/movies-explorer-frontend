@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import NavTab from '../NavTab/NavTab';
@@ -13,11 +13,24 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import { useEffect, useState } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+
+import * as mainApi from '../../utils/MainApi';
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([])
   const [searchString, setSearchString] = useState('');
+  const history = useHistory();
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({
+    name: '',
+    email: '',
+    _id: '',
+  });
 
   useEffect(() => {
     fetch('https://api.nomoreparties.co/beatfilm-movies')
@@ -58,17 +71,49 @@ function App() {
     setFilteredMovies( arr );
   }, [searchString, movies])
 
+  useEffect(() => {
+    handleTokenCheck();
+  }, []);
+
   function handleChangeSearchString(evt) {
     console.log(evt.target.value);
     setSearchString(evt.target.value);
   }
 
+  function handleTokenCheck() {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      mainApi.checkToken(jwt)
+        .then((data) => {
+          setCurrentUser({
+            name:data.name, 
+            email: data.email,
+            _id: data._id
+          });
+          setLoggedIn(true);
+        })
+        .catch(err => {
+          console.log('Очищен jwt, т.к. не валидный');
+          localStorage.removeItem('jwt');
+          setLoggedIn(false);
+          history.push('/signin');
+        });
+    }
+  }
 
+  function handleLogin(){
+    handleTokenCheck();    
+  }
 
-  
-  
+  function handleMovieSave(){
+    console.log('save movie');
+
+  }
+
+ 
   return (
     <>
+      <CurrentUserContext.Provider value = { currentUser } >
       <Switch>
         <Route exact path='/'>
           <div className='promo'>
@@ -90,21 +135,30 @@ function App() {
           </div>
         </Route>
         <Route path='/movies'>
-          <Movies
+          <ProtectedRoute 
+            component={Movies}
+            loggedIn = {loggedIn}
             movies={filteredMovies}
             onChangeSearchString={handleChangeSearchString}
             searchString={searchString}
+            onMovieSave={handleMovieSave}
             enableDelete={false}
-          ></Movies>
+          ></ProtectedRoute>
         </Route>
         <Route path='/saved-movies'>
-          <SavedMovies enableDelete={true}></SavedMovies>
+          <ProtectedRoute 
+            component={SavedMovies} 
+            loggedIn = {loggedIn} 
+            enableDelete={true} 
+            movies={savedMovies}>
+
+            </ProtectedRoute>
         </Route>
         <Route path='/profile'>
           <Profile></Profile>
         </Route>
         <Route path='/signin'>
-          <Login></Login>
+          <Login onSubmit={handleLogin}></Login>
         </Route>
         <Route path='/signup'>
           <Register></Register>
@@ -114,6 +168,7 @@ function App() {
           <NotFound></NotFound>
         </Route>
       </Switch>
+      </CurrentUserContext.Provider>
     </>
   );
 }
