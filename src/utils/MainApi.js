@@ -1,5 +1,6 @@
-const url = 'https://api.pishchyta.nomoredomains.club';
-//sconst url = 'http://localhost:3005';
+//const url = 'https://api.pishchyta.nomoredomains.club';
+let userJWT = '';
+const url = 'http://localhost:3005';
 
 function checkResponse(res) {
     if (res.ok) {
@@ -31,7 +32,7 @@ function login(email, password){
 }
 
 function checkToken (jwt){
-    console.log(jwt);
+    userJWT = jwt;
     return fetch(`${url}/users/me`, {
         method: 'GET',
         headers: {
@@ -41,4 +42,36 @@ function checkToken (jwt){
     }).then(checkResponse);
 }
 
-export {register, login, checkToken}
+function getSavedFilms(){
+    return fetch(`${url}/movies`, {
+        method: 'get',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `${userJWT}`,
+        },
+    }).then(checkResponse);
+
+}
+
+function saveFilm(film){
+    return fetch(`${url}/movies`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `${userJWT}`,
+        },
+        body: JSON.stringify(film),
+    }).then(checkResponse);
+}
+
+function deleteFilm(movieId){
+    return fetch(`${url}/movies/${movieId}`, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `${userJWT}`,
+        }
+    }).then(checkResponse);
+}
+
+export {register, login, checkToken, saveFilm, getSavedFilms, deleteFilm}

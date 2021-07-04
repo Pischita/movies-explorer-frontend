@@ -21,7 +21,7 @@ import * as mainApi from '../../utils/MainApi';
 function App() {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [savedMovies, setSavedMovies] = useState([])
+  const [savedMovies, setSavedMovies] = useState([]);
   const [searchString, setSearchString] = useState('');
   const history = useHistory();
 
@@ -44,12 +44,12 @@ function App() {
       .then((data) => {
         const movies = data.map((item) => {
           return {
-            id: item.id,
             nameRU: item.nameRU,
             nameEN: item.nameEN,
             movieId: item.id,
-            thumbnail: '',
-            trailer: '',
+            thumbnail:
+              'https://api.nomoreparties.co' + item.image.formats.thumbnail.url,
+            trailer: item.trailerLink,
             image: 'https://api.nomoreparties.co' + item.image.url,
             description: item.description,
             year: item.year,
@@ -63,36 +63,47 @@ function App() {
       });
   }, []);
 
-  
-  useEffect(()=>{
-    const arr = movies.filter(item =>{
-      return item.nameRU.toLowerCase().includes(searchString.toLowerCase() );
+  function fillFavoriteMovies() {
+    mainApi
+      .getSavedFilms()
+      .then((data) => {
+        setSavedMovies(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    const arr = movies.filter((item) => {
+      return item.nameRU.toLowerCase().includes(searchString.toLowerCase());
     });
-    setFilteredMovies( arr );
-  }, [searchString, movies])
+    setFilteredMovies(arr);
+  }, [searchString, movies]);
 
   useEffect(() => {
     handleTokenCheck();
   }, []);
 
   function handleChangeSearchString(evt) {
-    console.log(evt.target.value);
     setSearchString(evt.target.value);
   }
 
   function handleTokenCheck() {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
-      mainApi.checkToken(jwt)
+      mainApi
+        .checkToken(jwt)
         .then((data) => {
           setCurrentUser({
-            name:data.name, 
+            name: data.name,
             email: data.email,
-            _id: data._id
+            _id: data._id,
           });
           setLoggedIn(true);
+          fillFavoriteMovies();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log('Очищен jwt, т.к. не валидный');
           localStorage.removeItem('jwt');
           setLoggedIn(false);
@@ -101,73 +112,87 @@ function App() {
     }
   }
 
-  function handleLogin(){
-    handleTokenCheck();    
+  function handleLogin() {
+    handleTokenCheck();
   }
 
-  function handleMovieSave(){
-    console.log('save movie');
+  function handleMovieSave(movieId, saved) {
+    if (saved) {
+      const movie = savedMovies.find((item) => item.movieId == movieId);
+      mainApi.deleteFilm(movie._id)
+        .then(data =>{
+          const arr = savedMovies.filter(item =>{ return item._id != data._id});
+          setSavedMovies(arr);
+      });
+    } else {
+      const movie = filteredMovies.find((item) => item.movieId == movieId);
+      mainApi.saveFilm(movie)
+      .then(data =>{
+        const arr = [...savedMovies, data];
+        setSavedMovies(arr);
+      });
+    }
 
+    
   }
 
- 
   return (
     <>
-      <CurrentUserContext.Provider value = { currentUser } >
-      <Switch>
-        <Route exact path='/'>
-          <div className='promo'>
-            <Header></Header>
-            <div className='promo__banner'>
-              <h1 className='promo__title'>
-                Учебный проект студента факультета Веб-разработки.
-              </h1>
+      <CurrentUserContext.Provider value={currentUser}>
+        <Switch>
+          <Route exact path='/'>
+            <div className='promo'>
+              <Header></Header>
+              <div className='promo__banner'>
+                <h1 className='promo__title'>
+                  Учебный проект студента факультета Веб-разработки.
+                </h1>
+              </div>
             </div>
-          </div>
-          <NavTab></NavTab>
-          <main>
-            <AboutProject></AboutProject>
-            <Techs></Techs>
-            <AboutMe></AboutMe>
-          </main>
-          <div className='promo__footer'>
-            <Footer></Footer>
-          </div>
-        </Route>
-        <Route path='/movies'>
-          <ProtectedRoute 
-            component={Movies}
-            loggedIn = {loggedIn}
-            movies={filteredMovies}
-            onChangeSearchString={handleChangeSearchString}
-            searchString={searchString}
-            onMovieSave={handleMovieSave}
-            enableDelete={false}
-          ></ProtectedRoute>
-        </Route>
-        <Route path='/saved-movies'>
-          <ProtectedRoute 
-            component={SavedMovies} 
-            loggedIn = {loggedIn} 
-            enableDelete={true} 
-            movies={savedMovies}>
+            <NavTab></NavTab>
+            <main>
+              <AboutProject></AboutProject>
+              <Techs></Techs>
+              <AboutMe></AboutMe>
+            </main>
+            <div className='promo__footer'>
+              <Footer></Footer>
+            </div>
+          </Route>
+          <Route path='/movies'>
+            <ProtectedRoute
+              component={Movies}
+              loggedIn={loggedIn}
+              movies={filteredMovies}
+              onChangeSearchString={handleChangeSearchString}
+              searchString={searchString}
+              onMovieSave={handleMovieSave}
+              enableDelete={false}
+            ></ProtectedRoute>
+          </Route>
+          <Route path='/saved-movies'>
+            <ProtectedRoute
+              component={SavedMovies}
+              loggedIn={loggedIn}
+              enableDelete={true}
+              movies={savedMovies}
+              onMovieSave={handleMovieSave}
+            ></ProtectedRoute>
+          </Route>
+          <Route path='/profile'>
+            <Profile></Profile>
+          </Route>
+          <Route path='/signin'>
+            <Login onSubmit={handleLogin}></Login>
+          </Route>
+          <Route path='/signup'>
+            <Register></Register>
+          </Route>
 
-            </ProtectedRoute>
-        </Route>
-        <Route path='/profile'>
-          <Profile></Profile>
-        </Route>
-        <Route path='/signin'>
-          <Login onSubmit={handleLogin}></Login>
-        </Route>
-        <Route path='/signup'>
-          <Register></Register>
-        </Route>
-
-        <Route path='*'>
-          <NotFound></NotFound>
-        </Route>
-      </Switch>
+          <Route path='*'>
+            <NotFound></NotFound>
+          </Route>
+        </Switch>
       </CurrentUserContext.Provider>
     </>
   );
