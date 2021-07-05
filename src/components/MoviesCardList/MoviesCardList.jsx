@@ -1,9 +1,12 @@
 import './MoviesCardList.css';
 import MovieCard from '../MoviesCard/MoviesCard';
+import Preloader from '../Preloader/Preloader';
 
-export default function MoviesCardList({ movies, enableDelete, onMovieSave }) {
+export default function MoviesCardList({ movies, enableDelete, onMovieSave, showPreloader }) {
   return (
+   
     <main className='movies-card-list'>
+      
       {movies.map((movie) => (
         <MovieCard
           key={movie.movieId}
@@ -16,6 +19,7 @@ export default function MoviesCardList({ movies, enableDelete, onMovieSave }) {
           onMovieSave={onMovieSave}
         ></MovieCard>
       ))}
+      { showPreloader && <Preloader/> }
     </main>
   );
 }

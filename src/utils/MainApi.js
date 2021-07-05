@@ -74,4 +74,16 @@ function deleteFilm(movieId){
     }).then(checkResponse);
 }
 
-export {register, login, checkToken, saveFilm, getSavedFilms, deleteFilm}
+function editProfile(name, email){
+    return fetch(`${url}/users/me`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `${userJWT}`,
+        },
+        body: JSON.stringify({email: email, name: name}),
+    }).then(checkResponse);
+
+}
+
+export {register, login, checkToken, saveFilm, getSavedFilms, deleteFilm, editProfile}

@@ -22,7 +22,10 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
   const [searchString, setSearchString] = useState('');
+  const [isShortFilms, setIsShortFilms] = useState(false);
+  const [showPreloader, setShowPreloader] = useState('false');
   const history = useHistory();
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -56,6 +59,7 @@ function App() {
             duration: item.duration,
             director: item.director,
             country: item.country,
+            saved: false,
           };
         });
         setMovies(movies);
@@ -75,11 +79,33 @@ function App() {
   }
 
   useEffect(() => {
+
+    setShowPreloader(true);
+
     const arr = movies.filter((item) => {
-      return item.nameRU.toLowerCase().includes(searchString.toLowerCase());
+      return item.nameRU.toLowerCase().includes(searchString.toLowerCase() ) && (isShortFilms ? item.duration <= 40 : true) ;
     });
+
+    arr.forEach(item => {
+      const findedSavedMovie = savedMovies.find((savedItem) => savedItem.movieId === item.movieId);
+      if(findedSavedMovie){
+        item.saved = true;
+      }else{
+        item.saved = false;
+      }      
+    });
+
     setFilteredMovies(arr);
-  }, [searchString, movies]);
+
+    // Фильтрация по сохраненным фильмам
+    const arrSaved = savedMovies.filter((item) => {
+      return item.nameRU.toLowerCase().includes(searchString.toLowerCase() ) && (isShortFilms ? item.duration <= 40 : true) ;
+    });
+    setFilteredSavedMovies(arrSaved);
+
+
+    setShowPreloader(false);
+  }, [searchString, movies, savedMovies, isShortFilms]);
 
   useEffect(() => {
     handleTokenCheck();
@@ -87,6 +113,11 @@ function App() {
 
   function handleChangeSearchString(evt) {
     setSearchString(evt.target.value);
+  }
+
+  function handelChangeIsShortFilms(state){
+    setIsShortFilms(state);
+    console.log(state);
   }
 
   function handleTokenCheck() {
@@ -118,22 +149,39 @@ function App() {
 
   function handleMovieSave(movieId, saved) {
     if (saved) {
-      const movie = savedMovies.find((item) => item.movieId == movieId);
+      const movie = savedMovies.find((item) => item.movieId === movieId);
       mainApi.deleteFilm(movie._id)
         .then(data =>{
-          const arr = savedMovies.filter(item =>{ return item._id != data._id});
+          const arr = savedMovies.filter(item =>{ return item._id !== data._id});
           setSavedMovies(arr);
       });
     } else {
-      const movie = filteredMovies.find((item) => item.movieId == movieId);
+      const movie = filteredMovies.find((item) => item.movieId === movieId);
+      
+
       mainApi.saveFilm(movie)
       .then(data =>{
         const arr = [...savedMovies, data];
         setSavedMovies(arr);
+        
+        movie.saved = true; 
+        setFilteredMovies(filteredMovies);    
       });
-    }
+    }    
+  }
 
-    
+  function handleProfileEdit(name, email){
+    mainApi.editProfile(name, email)
+    .then(data => {
+      setCurrentUser({
+        name: data.user.name,
+        email: data.user.email,
+        _id: data.user._id,
+      });
+    })
+    .catch(err =>{
+      console.log(err);
+    })
   }
 
   return (
@@ -164,8 +212,11 @@ function App() {
               component={Movies}
               loggedIn={loggedIn}
               movies={filteredMovies}
+              showPreloader={showPreloader}
               onChangeSearchString={handleChangeSearchString}
               searchString={searchString}
+              isShortFilms={isShortFilms}
+              onChangeShortFilms={handelChangeIsShortFilms}
               onMovieSave={handleMovieSave}
               enableDelete={false}
             ></ProtectedRoute>
@@ -173,14 +224,23 @@ function App() {
           <Route path='/saved-movies'>
             <ProtectedRoute
               component={SavedMovies}
+              searchString={searchString}
+              onChangeSearchString={handleChangeSearchString}
+              isShortFilms={isShortFilms}
+              onChangeShortFilms={handelChangeIsShortFilms}
               loggedIn={loggedIn}
               enableDelete={true}
-              movies={savedMovies}
+              movies={filteredSavedMovies}
+              showPreloader={showPreloader}
               onMovieSave={handleMovieSave}
             ></ProtectedRoute>
           </Route>
           <Route path='/profile'>
-            <Profile></Profile>
+            <ProtectedRoute
+              component={Profile}
+              loggedIn={loggedIn}
+              onEditProfile={handleProfileEdit}>
+            </ProtectedRoute>
           </Route>
           <Route path='/signin'>
             <Login onSubmit={handleLogin}></Login>
