@@ -6,9 +6,9 @@ import {register} from '../../utils/MainApi';
 
 
 export default function Register({onRegisterSubmit}){
-    const [name, setName] = useState('Иван');
-    const [email, setEmail] = useState('aaib@tut.by');
-    const [password, setPassword] = useState('123');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     function handleNameChange(evt){
         setName(evt.target.value);
