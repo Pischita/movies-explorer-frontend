@@ -1,6 +1,6 @@
-//const url = 'https://api.pishchyta.nomoredomains.club';
+const url = 'https://api.pishchyta.nomoredomains.club';
 let userJWT = '';
-const url = 'http://localhost:3005';
+//const url = 'http://localhost:3005';
 
 function checkResponse(res) {
     if (res.ok) {

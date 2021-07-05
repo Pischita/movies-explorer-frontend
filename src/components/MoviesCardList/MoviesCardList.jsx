@@ -17,6 +17,7 @@ export default function MoviesCardList({ movies, enableDelete, onMovieSave, show
           enableDelete={enableDelete}
           image={movie.image}
           onMovieSave={onMovieSave}
+          trailer={movie.trailer}
         ></MovieCard>
       ))}
       { showPreloader && <Preloader/> }

@@ -1,6 +1,6 @@
 import './MoviesCard.css';
 
-export default function MoviesCard ({ name ='', movieId, saved = false, duration='', enableDelete, image, onMovieSave}){
+export default function MoviesCard ({ name ='', movieId, saved = false, duration='', enableDelete, image, onMovieSave, trailer}){
 
     function handleClickSaveMovie(evt){
         if (enableDelete) {
@@ -22,7 +22,10 @@ export default function MoviesCard ({ name ='', movieId, saved = false, duration
 
     return(
         <div className="movie-card">
-            <img className="movie-card__image" src={image} alt={name} />
+            <a href={trailer} target="_blank" rel="noreferrer">
+                <img className="movie-card__image" src={image} alt={name} />
+            </a>
+            
             <div className="movie-card__title-wrapper">
                 <h2 className="movie-card__title">{name}</h2>
                 <button className={'movie-card__icon ' + iconType } onClick={handleClickSaveMovie}></button>
