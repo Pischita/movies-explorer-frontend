@@ -19,7 +19,6 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import * as mainApi from '../../utils/MainApi';
 import * as moviesApi from '../../utils/MoviesApi';
 
-
 function App() {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -38,12 +37,13 @@ function App() {
   });
 
   useEffect(() => {
-    moviesApi.getFilms()
+    moviesApi
+      .getFilms()
       .then((data) => {
         const movies = data.map((item) => {
           return {
-            nameRU: item.nameRU,
-            nameEN: item.nameEN,
+            nameRU: item.nameRU || '',
+            nameEN: item.nameEN || item.nameRU,
             movieId: item.id,
             thumbnail:
               'https://api.nomoreparties.co' + item.image.formats.thumbnail.url,
@@ -59,7 +59,8 @@ function App() {
         });
         setMovies(movies);
         setFilteredMovies(movies);
-      }).catch(err =>{
+      })
+      .catch((err) => {
         console.log(err);
       });
   }, []);
@@ -76,30 +77,40 @@ function App() {
   }
 
   useEffect(() => {
-
     setShowPreloader(true);
 
-    const arr = movies.filter((item) => {
-      return item.nameRU.toLowerCase().includes(searchString.toLowerCase() ) && (isShortFilms ? item.duration <= 40 : true) ;
-    });
+    let arr = [];
 
-    arr.forEach(item => {
-      const findedSavedMovie = savedMovies.find((savedItem) => savedItem.movieId === item.movieId);
-      if(findedSavedMovie){
+    if (searchString !== '') {
+      arr = movies.filter((item) => {
+        return (
+          item.nameRU.toLowerCase().includes(searchString.toLowerCase()) &&
+          (isShortFilms ? item.duration <= 40 : true)
+        );
+      });
+    }
+
+    arr.forEach((item) => {
+      const findedSavedMovie = savedMovies.find(
+        (savedItem) => savedItem.movieId === item.movieId
+      );
+      if (findedSavedMovie) {
         item.saved = true;
-      }else{
+      } else {
         item.saved = false;
-      }      
+      }
     });
 
     setFilteredMovies(arr);
 
     // Фильтрация по сохраненным фильмам
     const arrSaved = savedMovies.filter((item) => {
-      return item.nameRU.toLowerCase().includes(searchString.toLowerCase() ) && (isShortFilms ? item.duration <= 40 : true) ;
+      return (
+        item.nameRU.toLowerCase().includes(searchString.toLowerCase()) &&
+        (isShortFilms ? item.duration <= 40 : true)
+      );
     });
     setFilteredSavedMovies(arrSaved);
-
 
     setShowPreloader(false);
   }, [searchString, movies, savedMovies, isShortFilms]);
@@ -112,7 +123,7 @@ function App() {
     setSearchString(evt.target.value);
   }
 
-  function handelChangeIsShortFilms(state){
+  function handelChangeIsShortFilms(state) {
     setIsShortFilms(state);
     console.log(state);
   }
@@ -147,38 +158,38 @@ function App() {
   function handleMovieSave(movieId, saved) {
     if (saved) {
       const movie = savedMovies.find((item) => item.movieId === movieId);
-      mainApi.deleteFilm(movie._id)
-        .then(data =>{
-          const arr = savedMovies.filter(item =>{ return item._id !== data._id});
-          setSavedMovies(arr);
+      mainApi.deleteFilm(movie._id).then((data) => {
+        const arr = savedMovies.filter((item) => {
+          return item._id !== data._id;
+        });
+        setSavedMovies(arr);
       });
     } else {
       const movie = filteredMovies.find((item) => item.movieId === movieId);
-      
 
-      mainApi.saveFilm(movie)
-      .then(data =>{
+      mainApi.saveFilm(movie).then((data) => {
         const arr = [...savedMovies, data];
         setSavedMovies(arr);
-        
-        movie.saved = true; 
-        setFilteredMovies(filteredMovies);    
+
+        movie.saved = true;
+        setFilteredMovies(filteredMovies);
       });
-    }    
+    }
   }
 
-  function handleProfileEdit(name, email){
-    mainApi.editProfile(name, email)
-    .then(data => {
-      setCurrentUser({
-        name: data.user.name,
-        email: data.user.email,
-        _id: data.user._id,
+  function handleProfileEdit(name, email) {
+    mainApi
+      .editProfile(name, email)
+      .then((data) => {
+        setCurrentUser({
+          name: data.user.name,
+          email: data.user.email,
+          _id: data.user._id,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    })
-    .catch(err =>{
-      console.log(err);
-    })
   }
 
   return (
@@ -236,8 +247,8 @@ function App() {
             <ProtectedRoute
               component={Profile}
               loggedIn={loggedIn}
-              onEditProfile={handleProfileEdit}>
-            </ProtectedRoute>
+              onEditProfile={handleProfileEdit}
+            ></ProtectedRoute>
           </Route>
           <Route path='/signin'>
             <Login onSubmit={handleLogin}></Login>
