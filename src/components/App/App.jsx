@@ -17,6 +17,8 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import * as mainApi from '../../utils/MainApi';
+import * as moviesApi from '../../utils/MoviesApi';
+
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -36,14 +38,7 @@ function App() {
   });
 
   useEffect(() => {
-    fetch('https://api.nomoreparties.co/beatfilm-movies')
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          return Promise.reject(res.statusText);
-        }
-      })
+    moviesApi.getFilms()
       .then((data) => {
         const movies = data.map((item) => {
           return {
@@ -64,6 +59,8 @@ function App() {
         });
         setMovies(movies);
         setFilteredMovies(movies);
+      }).catch(err =>{
+        console.log(err);
       });
   }, []);
 
