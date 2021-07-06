@@ -32,6 +32,7 @@ function App() {
   const [showCard, setShowCard] = useState({start: 0, more: 0});
   const [countCardsOnPage, setCountCardsOnPage] = useState(showCard.start);
   const [enableDownloadMore, setEnableDownloadMore] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('')
   
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -42,6 +43,7 @@ function App() {
   });
 
   useEffect(() => {
+    setErrorMessage('');
     moviesApi
       .getFilms()
       .then((data) => {
@@ -66,7 +68,7 @@ function App() {
         setFilteredMovies(movies);
       })
       .catch((err) => {
-        console.log(err);
+        setErrorMessage(err);
       });
   }, []);
 
@@ -158,6 +160,7 @@ function App() {
   }
 
   function handleTokenCheck() {
+    setErrorMessage('');
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       mainApi
@@ -172,13 +175,19 @@ function App() {
           fillFavoriteMovies();
         })
         .catch((err) => {
-          console.log('Очищен jwt, т.к. не валидный');
+          setErrorMessage(err);
           localStorage.removeItem('jwt');
           setLoggedIn(false);
           history.push('/signin');
         });
     }
   }
+
+  useState(()=>{
+    if(loggedIn){
+      history.push('/movies');
+    }
+  },[loggedIn]);
 
   function handleLogin() {
     handleTokenCheck();
