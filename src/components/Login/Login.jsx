@@ -20,18 +20,7 @@ export default function Login({onSubmit}) {
 
     function handleSubmit(evt){
         evt.preventDefault();
-        mainApi.login(email, password).then((data) =>{
-            console.log(data);
-            if(data.jwt){
-                setEmail('');
-                setPassword('');
-                localStorage.setItem('jwt', data.jwt);
-                onSubmit();
-                history.push('/movies');
-            }
-          }).catch(err =>{
-            console.log(err);
-          });
+        onSubmit(email, password);
        
     }
 

@@ -189,8 +189,18 @@ function App() {
     }
   },[loggedIn]);
 
-  function handleLogin() {
-    handleTokenCheck();
+  function handleLogin(email, password) {
+    mainApi.login(email, password).then((data) =>{
+      console.log(data);
+      if(data.jwt){
+          localStorage.setItem('jwt', data.jwt);
+          handleTokenCheck();;
+          history.push('/movies');
+      }
+    }).catch(err =>{
+      console.log(err);
+    });
+    
   }
 
   function handleDownloadMore(){
@@ -300,7 +310,7 @@ function App() {
             <Login onSubmit={handleLogin}></Login>
           </Route>
           <Route path='/signup'>
-            <Register></Register>
+            <Register onSubmit={handleLogin}></Register>
           </Route>
 
           <Route path='*'>
