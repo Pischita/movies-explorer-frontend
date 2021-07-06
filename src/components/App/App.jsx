@@ -28,6 +28,11 @@ function App() {
   const [isShortFilms, setIsShortFilms] = useState(false);
   const [showPreloader, setShowPreloader] = useState('false');
   const history = useHistory();
+  const [widthScreen, setWidthScreen] = useState(0);
+  const [showCard, setShowCard] = useState({start: 0, more: 0});
+  const [countCardsOnPage, setCountCardsOnPage] = useState(showCard.start);
+  const [enableDownloadMore, setEnableDownloadMore] = useState(false);
+  
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({
@@ -65,6 +70,30 @@ function App() {
       });
   }, []);
 
+  useEffect(()=>{
+    setCountCardsOnPage(showCard.start);
+  }, [searchString])
+
+
+  useEffect(() => {
+    function handleResize() {
+      setWidthScreen(window.innerWidth);
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); 
+
+  useEffect(()=>{
+    if(widthScreen > 1280) {
+      setShowCard({start: 12, more: 4});
+    } else if (widthScreen >= 768){
+      setShowCard({start: 8, more: 2});
+    } else {
+      setShowCard({start: 5, more: 2});
+    }
+  }, [widthScreen]);
+
   function fillFavoriteMovies() {
     mainApi
       .getSavedFilms()
@@ -83,10 +112,8 @@ function App() {
 
     if (searchString !== '') {
       arr = movies.filter((item) => {
-        return (
-          item.nameRU.toLowerCase().includes(searchString.toLowerCase()) &&
-          (isShortFilms ? item.duration <= 40 : true)
-        );
+        let result = item.nameRU.trim().toLowerCase().includes(searchString.toLowerCase()) && (isShortFilms ? item.duration <= 40 : true) ;
+        return result;
       });
     }
 
@@ -101,7 +128,9 @@ function App() {
       }
     });
 
-    setFilteredMovies(arr);
+
+    setEnableDownloadMore(arr.length > countCardsOnPage);
+    setFilteredMovies([...arr.splice(0, countCardsOnPage)]);
 
     // Фильтрация по сохраненным фильмам
     const arrSaved = savedMovies.filter((item) => {
@@ -112,8 +141,8 @@ function App() {
     });
     setFilteredSavedMovies(arrSaved);
 
-    setShowPreloader(false);
-  }, [searchString, movies, savedMovies, isShortFilms]);
+     setShowPreloader(false);
+  }, [searchString, movies, savedMovies, isShortFilms, countCardsOnPage]);
 
   useEffect(() => {
     handleTokenCheck();
@@ -153,6 +182,12 @@ function App() {
 
   function handleLogin() {
     handleTokenCheck();
+  }
+
+  function handleDownloadMore(){
+    setCountCardsOnPage((prevState)=>{
+      return prevState += showCard.more;
+    });
   }
 
   function handleMovieSave(movieId, saved) {
@@ -227,6 +262,8 @@ function App() {
               onChangeShortFilms={handelChangeIsShortFilms}
               onMovieSave={handleMovieSave}
               enableDelete={false}
+              enableDownloadMore={enableDownloadMore}
+              onClickDownloadMore={handleDownloadMore}
             ></ProtectedRoute>
           </Route>
           <Route path='/saved-movies'>
