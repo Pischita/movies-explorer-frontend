@@ -3,8 +3,7 @@ import MovieCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 
 export default function MoviesCardList({ movies, enableDelete, onMovieSave, showPreloader }) {
-  return (
-   
+  return (   
     <main className='movies-card-list'>
       
       {movies.map((movie) => (
