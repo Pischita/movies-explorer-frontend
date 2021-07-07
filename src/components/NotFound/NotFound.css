@@ -28,6 +28,26 @@
     color: #000000;
 }
 
+.not-found__back {
+    margin-top: 100px;
+    background-color: transparent;
+    border: none;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #3456F3;
+}
+
+.not-found__back:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
 @media screen and (max-width:767px) {
     .not-found__title {
         font-size: 80px;
@@ -38,5 +58,5 @@
         font-size: 12px;
         line-height: 15px;
     }
-    
+
 }

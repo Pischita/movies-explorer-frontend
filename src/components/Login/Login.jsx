@@ -32,17 +32,17 @@ export default function Login({onSubmit, errorMessage}) {
 
 
     function handleBlur(evt){
-        switch (evt.target.name) {
-            case 'email':
-                setEmailDirty(true);
-                break;
-            case 'password':
-                setPasswordDirty(true);
-                break;
+        // switch (evt.target.name) {
+        //     case 'email':
+        //         setEmailDirty(true);
+        //         break;
+        //     case 'password':
+        //         setPasswordDirty(true);
+        //         break;
             
-            default:
-                break;
-        }
+        //     default:
+        //         break;
+        // }
     }
 
 
