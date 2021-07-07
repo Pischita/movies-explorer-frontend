@@ -33,8 +33,7 @@ function App() {
   const [countCardsOnPage, setCountCardsOnPage] = useState(showCard.start);
   const [enableDownloadMore, setEnableDownloadMore] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  
+  const [successMessage, setSuccessMessage] = useState('');  
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({
@@ -133,7 +132,13 @@ function App() {
 
 
     setEnableDownloadMore(arr.length > countCardsOnPage);
-    setFilteredMovies([...arr.splice(0, countCardsOnPage)]);
+
+    const partArr = [...arr.splice(0, countCardsOnPage)];
+    setFilteredMovies(partArr);
+    if(partArr.length > 0) {
+      localStorage.setItem('searchString', searchString);
+    }
+    
 
     // Фильтрация по сохраненным фильмам
     const arrSaved = savedMovies.filter((item) => {
@@ -147,8 +152,20 @@ function App() {
      setShowPreloader(false);
   }, [searchString, movies, savedMovies, isShortFilms, countCardsOnPage]);
 
+  
   useEffect(() => {
+    
+    
     handleTokenCheck();
+    if(loggedIn) {
+      history.goBack();
+    }
+
+    const strSearchString = localStorage.getItem('searchString');
+    if(strSearchString && strSearchString.length > 0){
+      setSearchString(strSearchString)
+    }
+
   }, []);
 
   function handleChangeSearchString(evt) {
