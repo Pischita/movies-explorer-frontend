@@ -1,6 +1,7 @@
 import './MoviesCardList.css';
 import MovieCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
+import { translateDuration } from '../../utils/utils';
 
 export default function MoviesCardList({ movies, enableDelete, onMovieSave, showPreloader }) {
   return (   
@@ -11,7 +12,7 @@ export default function MoviesCardList({ movies, enableDelete, onMovieSave, show
           key={movie.movieId}
           name={movie.nameRU}
           movieId={movie.movieId}
-          duration={movie.duration}
+          duration={translateDuration(movie.duration)}
           saved={movie.saved}
           enableDelete={enableDelete}
           image={movie.image}
