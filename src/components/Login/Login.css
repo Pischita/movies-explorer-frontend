@@ -69,6 +69,11 @@
     border: 1px solid #3456F3;
 }
 
+.login__submit:disabled{
+    cursor:not-allowed;
+    opacity: 0.5;
+}
+
 .login__register-wrapper {
     display: flex;
     justify-content: center;
@@ -103,6 +108,15 @@
   font-weight: normal;
   font-size: 10px;
   line-height: 12px;
+  color: #ff3055;
+}
+
+.login__input-error{
+    font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+
   color: #ff3055;
 }
 
