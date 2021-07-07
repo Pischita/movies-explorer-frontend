@@ -4,7 +4,7 @@ import { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-export default function Profile({onEditProfile}) {
+export default function Profile({onEditProfile, errorMessage, successMessage}) {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
@@ -32,7 +32,12 @@ export default function Profile({onEditProfile}) {
     }else{
       setDisableSubmit(true);
     }
-  }, [nameDirty, emailDirty]);
+    console.log(disableSubmit);
+  }, [nameDirty, emailDirty, name, email]);
+
+  useEffect(()=>{
+    setDisableSubmit(true);
+  }, []);
 
   function handleEmailChange(evt) {
     const value = evt.target.value;
@@ -40,7 +45,6 @@ export default function Profile({onEditProfile}) {
 
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
    
-
     if(value.length < 2){
       setErrorEmail('Введите email');
       setEmailDirty(true);
@@ -66,8 +70,7 @@ export default function Profile({onEditProfile}) {
       case 'email' : 
         setEmailDirty(true);
         break;
-      default :
-        
+      default :        
     }
 
   }
@@ -89,10 +92,12 @@ export default function Profile({onEditProfile}) {
             <input onBlur={handleBlur} className="profile__input" id='email' value={email} onChange={handleEmailChange} type="email" />
           </div>
           {emailDirty && <p className="profile__input-error">{errorEmail}</p>}
+          <p>{successMessage}</p>
             <div className="profile__button-group">
                 <button className="profile__submit" type='submit' disabled={disableSubmit} >Редактировать</button>
             </div>          
         </form>
+        
         <Link className="profile__signout" to='/singout'>Выйти из аккаунта</Link>
       </div>
     </div>

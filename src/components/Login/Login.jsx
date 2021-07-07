@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import * as mainApi from '../../utils/MainApi';
 import { useHistory } from 'react-router-dom';
 
-export default function Login({onSubmit}) {
+export default function Login({onSubmit, errorMessage}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory();
@@ -20,8 +20,7 @@ export default function Login({onSubmit}) {
 
     function handleSubmit(evt){
         evt.preventDefault();
-        onSubmit(email, password);
-       
+        onSubmit(email, password);       
     }
 
     return(
@@ -39,6 +38,7 @@ export default function Login({onSubmit}) {
                     <label className="login__label" htmlFor="password" >Password</label>
                     <input className="login__input" id="password" type="password" name="password" value={password} onChange={handlePasswordChange} required />
                 </div>
+                <p className='login__error'>{errorMessage}</p>
 
                 <button className="login__submit" type="submit">Войти</button>
             </form>

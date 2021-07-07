@@ -32,7 +32,8 @@ function App() {
   const [showCard, setShowCard] = useState({start: 0, more: 0});
   const [countCardsOnPage, setCountCardsOnPage] = useState(showCard.start);
   const [enableDownloadMore, setEnableDownloadMore] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -160,7 +161,6 @@ function App() {
   }
 
   function handleTokenCheck() {
-    setErrorMessage('');
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       mainApi
@@ -175,7 +175,7 @@ function App() {
           fillFavoriteMovies();
         })
         .catch((err) => {
-          setErrorMessage(err);
+          showErrorMessage(err);
           localStorage.removeItem('jwt');
           setLoggedIn(false);
           history.push('/signin');
@@ -190,6 +190,7 @@ function App() {
   },[loggedIn]);
 
   function handleLogin(email, password) {
+    
     mainApi.login(email, password).then((data) =>{
       console.log(data);
       if(data.jwt){
@@ -198,7 +199,7 @@ function App() {
           history.push('/movies');
       }
     }).catch(err =>{
-      console.log(err);
+      showErrorMessage('Неправильный логин или пароль');
     });
     
   }
@@ -231,6 +232,22 @@ function App() {
     }
   }
 
+  function showSuccessMessage(message){
+    setSuccessMessage(message);
+
+    setTimeout( ()=>{
+      setSuccessMessage('');
+    } , 3000);
+  }
+
+  function showErrorMessage(message){
+    setErrorMessage(message);
+
+    setTimeout( ()=>{
+      setErrorMessage('');
+    } , 3000);
+  }
+
   function handleProfileEdit(name, email) {
     mainApi
       .editProfile(name, email)
@@ -240,9 +257,11 @@ function App() {
           email: data.user.email,
           _id: data.user._id,
         });
+
+        showSuccessMessage('Изменения сохранены');
       })
       .catch((err) => {
-        console.log(err);
+        showErrorMessage(err);
       });
   }
 
@@ -304,10 +323,12 @@ function App() {
               component={Profile}
               loggedIn={loggedIn}
               onEditProfile={handleProfileEdit}
+              errorMessage={errorMessage}
+              successMessage={successMessage}
             ></ProtectedRoute>
           </Route>
           <Route path='/signin'>
-            <Login onSubmit={handleLogin}></Login>
+            <Login onSubmit={handleLogin} errorMessage={errorMessage}></Login>
           </Route>
           <Route path='/signup'>
             <Register onSubmit={handleLogin}></Register>
