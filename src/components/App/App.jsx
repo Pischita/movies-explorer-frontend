@@ -42,6 +42,18 @@ function App() {
     _id: '',
   });
 
+  useEffect(() => {    
+    
+    handleTokenCheck();
+   
+
+    const strSearchString = localStorage.getItem('searchString');
+    if(strSearchString && strSearchString.length > 0){
+      setSearchString(strSearchString)
+    }
+
+  }, []);
+
   useEffect(() => {
     setErrorMessage('');
     moviesApi
@@ -153,20 +165,7 @@ function App() {
   }, [searchString, movies, savedMovies, isShortFilms, countCardsOnPage]);
 
   
-  useEffect(() => {
-    
-    
-    handleTokenCheck();
-    if(loggedIn) {
-      history.goBack();
-    }
-
-    const strSearchString = localStorage.getItem('searchString');
-    if(strSearchString && strSearchString.length > 0){
-      setSearchString(strSearchString)
-    }
-
-  }, []);
+  
 
   function handleChangeSearchString(evt) {
     setSearchString(evt.target.value);
@@ -190,11 +189,13 @@ function App() {
           });
           setLoggedIn(true);
           fillFavoriteMovies();
+          localStorage.setItem('loggedIn', true);
         })
         .catch((err) => {
           showErrorMessage(err);
           localStorage.removeItem('jwt');
           setLoggedIn(false);
+          localStorage.setItem('loggedIn', false);
           history.push('/signin');
         });
     }
