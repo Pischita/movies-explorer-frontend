@@ -5,7 +5,7 @@ export default function SearchForm({searchString, onChangeSearchString, isShortF
     return (
         <form className="search-form" action="/movies">
             <div className="search-form__input-group">
-                <input className="search-form__input" onChange={onChangeSearchString} name="searchString" placeholder="Фильм" value={searchString} required />
+                <input className="search-form__input" onChange={onChangeSearchString} name="searchString" placeholder="Фильм" value={searchString} />
                 <button className="search-form__button" type="submit" onClick={onClickSearchForm}>Поиск</button>
             </div>
             <div className="search-form__filter">

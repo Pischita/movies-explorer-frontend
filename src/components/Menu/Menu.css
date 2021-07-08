@@ -132,7 +132,6 @@
 
 .promo .menu__link-user{
     background-color: #ffffff;
-
 }
 
 
@@ -190,6 +189,14 @@
 
     .menu__link_active {
         text-decoration: underline;
+    }
+
+    .promo .menu__link {
+        color: #000000;
+    }
+    
+    .promo .menu__link-user{
+        background-color: #000000;
     }
 }
 

@@ -96,10 +96,12 @@
 
 .profile__submit:hover {
   cursor: pointer;
+  opacity: 0.5;
 }
 
 .profile__submit:disabled{
     cursor: not-allowed;
+    opacity: 0.3;
 }
 
 .profile__signout {

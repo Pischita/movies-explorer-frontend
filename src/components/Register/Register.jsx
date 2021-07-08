@@ -2,14 +2,13 @@ import './Register.css';
 import Header from '../Header/Header';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { register, login } from '../../utils/MainApi';
-import { useHistory } from 'react-router-dom';
+import { register } from '../../utils/MainApi';
 
 export default function Register({ onSubmit }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory();
+
   const [errorMessage, setErrorMessage] = useState('');
 
   const [nameDirty, setNameDirty] = useState(false);
@@ -28,8 +27,6 @@ export default function Register({ onSubmit }) {
     } else {
       setDisableSubmit(true);
     }
-
-    console.log(disableSubmit);
 
   }, [passwordDirty, emailDirty, password, email, nameDirty, name]);
 

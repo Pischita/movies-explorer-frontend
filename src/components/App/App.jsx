@@ -15,6 +15,7 @@ import NotFound from '../NotFound/NotFound';
 import { useEffect, useState } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { DURATION_SHORT_FILM, RESOLUTION_TABLET_SCREEN, RESOLUTION_WIDTH_SCREEN } from '../../utils/constants';
 
 import * as mainApi from '../../utils/MainApi';
 import * as moviesApi from '../../utils/MoviesApi';
@@ -46,10 +47,17 @@ function App() {
     
     handleTokenCheck(); 
     
-    // const strSearchString = localStorage.getItem('searchString');
-    // if(strSearchString && strSearchString.length > 0){
-    //   setSearchString(strSearchString)
-    // }
+    const strSearchString = localStorage.getItem('searchString');
+    if(strSearchString && strSearchString.length > 0){
+       setSearchString(strSearchString);       
+    }
+
+    const strFilteredMovies = localStorage.getItem('filteredMovies');
+    if (strFilteredMovies){
+      const arr = JSON.parse(strFilteredMovies);
+      setFilteredMovies(arr);
+      setShowPreloader(false);
+    }
 
   }, []);
 
@@ -76,7 +84,6 @@ function App() {
           };
         });
         setMovies(movies);
-        setFilteredMovies(movies);
       })
       .catch((err) => {
         setErrorMessage(err);
@@ -87,7 +94,7 @@ function App() {
     setCountCardsOnPage(showCard.start);
   }, [searchString])
 
-  function SearchFilms(){
+  function searchFilms(){
     setShowPreloader(true);
 
     let arr = [];
@@ -115,19 +122,17 @@ function App() {
 
     const partArr = [...arr.splice(0, countCardsOnPage)];
     setFilteredMovies(partArr);
-    if(partArr.length > 0) {
-      localStorage.setItem('searchString', searchString);
-    }
-    
+    localStorage.setItem('searchString', searchString);
+    localStorage.setItem('filteredMovies', JSON.stringify(partArr) );    
 
     // Фильтрация по сохраненным фильмам
     const arrSaved = savedMovies.filter((item) => {
       return (
         item.nameRU.toLowerCase().includes(searchString.toLowerCase()) &&
-        (isShortFilms ? item.duration <= 40 : true)
+        (isShortFilms ? item.duration <= DURATION_SHORT_FILM : true)
       );
     });
-    setFilteredSavedMovies(arrSaved);
+    setFilteredSavedMovies(savedMovies);
 
      setShowPreloader(false);
 
@@ -144,9 +149,9 @@ function App() {
   }, []); 
 
   useEffect(()=>{
-    if(widthScreen > 1280) {
+    if(widthScreen > RESOLUTION_WIDTH_SCREEN) {
       setShowCard({start: 12, more: 4});
-    } else if (widthScreen >= 768){
+    } else if (widthScreen >= RESOLUTION_TABLET_SCREEN){
       setShowCard({start: 8, more: 2});
     } else {
       setShowCard({start: 5, more: 2});
@@ -165,8 +170,8 @@ function App() {
   }
 
   useEffect(() => {
-    
-  }, [searchString, movies, savedMovies, isShortFilms, countCardsOnPage]);
+    searchFilms();    
+  }, [movies, savedMovies]);
 
   
   function handleLogout(){
@@ -180,7 +185,7 @@ function App() {
 
   function handleClickSearchForm(evt){
     evt.preventDefault();
-    SearchFilms();
+    searchFilms();
   }
 
   function handelChangeIsShortFilms(state) {
@@ -247,6 +252,7 @@ function App() {
     setCountCardsOnPage((prevState)=>{
       return prevState += showCard.more;
     });
+    searchFilms();
   }
 
   function handleMovieSave(movieId, saved) {
@@ -356,6 +362,7 @@ function App() {
               movies={filteredSavedMovies}
               showPreloader={showPreloader}
               onMovieSave={handleMovieSave}
+              onClickSearchForm={handleClickSearchForm}
             ></ProtectedRoute>
           </Route>
           <Route path='/profile'>
