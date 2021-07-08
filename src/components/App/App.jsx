@@ -44,13 +44,12 @@ function App() {
 
   useEffect(() => {    
     
-    handleTokenCheck();
-   
-
-    const strSearchString = localStorage.getItem('searchString');
-    if(strSearchString && strSearchString.length > 0){
-      setSearchString(strSearchString)
-    }
+    handleTokenCheck(); 
+    
+    // const strSearchString = localStorage.getItem('searchString');
+    // if(strSearchString && strSearchString.length > 0){
+    //   setSearchString(strSearchString)
+    // }
 
   }, []);
 
@@ -88,38 +87,7 @@ function App() {
     setCountCardsOnPage(showCard.start);
   }, [searchString])
 
-
-  useEffect(() => {
-    function handleResize() {
-      setWidthScreen(window.innerWidth);
-    }
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-  }, []); 
-
-  useEffect(()=>{
-    if(widthScreen > 1280) {
-      setShowCard({start: 12, more: 4});
-    } else if (widthScreen >= 768){
-      setShowCard({start: 8, more: 2});
-    } else {
-      setShowCard({start: 5, more: 2});
-    }
-  }, [widthScreen]);
-
-  function fillFavoriteMovies() {
-    mainApi
-      .getSavedFilms()
-      .then((data) => {
-        setSavedMovies(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  useEffect(() => {
+  function SearchFilms(){
     setShowPreloader(true);
 
     let arr = [];
@@ -162,6 +130,42 @@ function App() {
     setFilteredSavedMovies(arrSaved);
 
      setShowPreloader(false);
+
+  }
+
+
+  useEffect(() => {
+    function handleResize() {
+      setWidthScreen(window.innerWidth);
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); 
+
+  useEffect(()=>{
+    if(widthScreen > 1280) {
+      setShowCard({start: 12, more: 4});
+    } else if (widthScreen >= 768){
+      setShowCard({start: 8, more: 2});
+    } else {
+      setShowCard({start: 5, more: 2});
+    }
+  }, [widthScreen]);
+
+  function fillFavoriteMovies() {
+    mainApi
+      .getSavedFilms()
+      .then((data) => {
+        setSavedMovies(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  useEffect(() => {
+    
   }, [searchString, movies, savedMovies, isShortFilms, countCardsOnPage]);
 
   
@@ -172,6 +176,11 @@ function App() {
 
   function handleChangeSearchString(evt) {
     setSearchString(evt.target.value);
+  }
+
+  function handleClickSearchForm(evt){
+    evt.preventDefault();
+    SearchFilms();
   }
 
   function handelChangeIsShortFilms(state) {
@@ -332,6 +341,7 @@ function App() {
               enableDelete={false}
               enableDownloadMore={enableDownloadMore}
               onClickDownloadMore={handleDownloadMore}
+              onClickSearchForm={handleClickSearchForm}
             ></ProtectedRoute>
           </Route>
           <Route path='/saved-movies'>
