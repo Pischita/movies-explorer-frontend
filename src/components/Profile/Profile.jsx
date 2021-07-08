@@ -4,7 +4,7 @@ import { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-export default function Profile({onEditProfile, errorMessage, successMessage}) {
+export default function Profile({onEditProfile, errorMessage, successMessage, onLogout}) {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
@@ -75,6 +75,10 @@ export default function Profile({onEditProfile, errorMessage, successMessage}) {
 
   }
 
+  function handleLogout(){
+    onLogout();
+  }
+
   return (
     <div className='profile'>
       <Header></Header>
@@ -98,7 +102,7 @@ export default function Profile({onEditProfile, errorMessage, successMessage}) {
             </div>          
         </form>
         
-        <Link className="profile__signout" to='/singout'>Выйти из аккаунта</Link>
+        <button className="profile__signout" onClick={handleLogout}>Выйти из аккаунта</button>
       </div>
     </div>
   );

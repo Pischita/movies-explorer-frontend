@@ -165,7 +165,10 @@ function App() {
   }, [searchString, movies, savedMovies, isShortFilms, countCardsOnPage]);
 
   
-  
+  function handleLogout(){
+    localStorage.removeItem('jwt');
+    handleTokenCheck();
+  }
 
   function handleChangeSearchString(evt) {
     setSearchString(evt.target.value);
@@ -198,6 +201,15 @@ function App() {
           localStorage.setItem('loggedIn', false);
           history.push('/signin');
         });
+    }else{
+      setLoggedIn(false);
+      setCurrentUser({
+        name: '',
+        email: '',
+        _id: '',
+      });
+      localStorage.setItem('loggedIn', false);
+      history.push('/signin');  
     }
   }
 
@@ -343,6 +355,7 @@ function App() {
               onEditProfile={handleProfileEdit}
               errorMessage={errorMessage}
               successMessage={successMessage}
+              onLogout={handleLogout}
             ></ProtectedRoute>
           </Route>
           <Route path='/signin'>
