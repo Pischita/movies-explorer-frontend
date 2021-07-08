@@ -2,20 +2,22 @@ import './Movies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import Preloader from '../Preloader/Preloader';
 import DownloadMore from '../DownloadMore/DownloadMore';
 import Footer from '../Footer/Footer';
 
 
-export default function Movies() {
+export default function Movies({movies, searchString, onChangeSearchString, onMovieSave, showPreloader, isShortFilms, onChangeShortFilms, enableDownloadMore, onClickDownloadMore, onClickSearchForm}) {
+    
+    
     return (
         <div className="movies">
             <Header></Header>
-            <SearchForm></SearchForm>
-            <MoviesCardList></MoviesCardList>
-            <DownloadMore></DownloadMore>
+            <SearchForm searchString={searchString} onChangeSearchString={onChangeSearchString} isShortFilms={isShortFilms} onChangeShortFilms={onChangeShortFilms} onClickSearchForm={onClickSearchForm}></SearchForm>
+            {searchString.length > 0 
+                ? movies.length > 0 ? <MoviesCardList movies={movies} onMovieSave={onMovieSave} showPreloader={showPreloader}></MoviesCardList> : <p>Ничего не найдено</p>
+                : '' }
+            {enableDownloadMore && <DownloadMore onDownloadMore={onClickDownloadMore}></DownloadMore>}            
             <Footer></Footer>
-            {/* <Preloader></Preloader> */}
         </div>
         
     );

@@ -1,18 +1,82 @@
 import './Profile.css';
 import Header from '../Header/Header';
-import { useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-export default function Profile() {
-  const [name, setName] = useState('Виталий');
-  const [email, setEmail] = useState('');
+export default function Profile({onEditProfile, errorMessage, successMessage, onLogout}) {
+  const currentUser = useContext(CurrentUserContext);
+  const [name, setName] = useState(currentUser.name);
+  const [email, setEmail] = useState(currentUser.email);
+  const [nameDirty, setNameDirty] = useState(false);
+  const [errorName, setErrorName] = useState('');
+  const [emailDirty, setEmailDirty] = useState(false);
+  const [errorEmail, setErrorEmail]= useState('');
+  const [disableSubmit, setDisableSubmit] = useState(true); 
 
   function handleUserChange(evt) {
+    const value = evt.target.value;
     setName(evt.target.value);
+    if(value.length < 2){
+      setErrorName('Введите имя');
+      setNameDirty(true);
+    } else {
+      setErrorName('')
+      setNameDirty(false);
+    }
   }
 
+  useEffect(()=>{
+    if(!nameDirty && !emailDirty){
+      setDisableSubmit(false);
+    }else{
+      setDisableSubmit(true);
+    }
+    console.log(disableSubmit);
+  }, [nameDirty, emailDirty, name, email]);
+
+  useEffect(()=>{
+    setDisableSubmit(true);
+  }, []);
+
   function handleEmailChange(evt) {
-    setEmail(evt.target.value);
+    const value = evt.target.value;
+    setEmail(value);
+
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+   
+    if(value.length < 2){
+      setErrorEmail('Введите email');
+      setEmailDirty(true);
+    } else if( ! re.test(String(value).toLowerCase()) ){
+      setErrorEmail('Email не корректный');
+      setEmailDirty(true);
+    } else {
+      setErrorEmail('')
+      setEmailDirty(false);
+    }  
+  }
+
+  function handleFormSubmit(evt){
+    evt.preventDefault();
+    onEditProfile(name, email);
+  }
+
+  function handleBlur(evt){
+    switch (evt.target.name) {
+      case 'name' :
+        setNameDirty(true);
+        break;
+      case 'email' : 
+        setEmailDirty(true);
+        break;
+      default :        
+    }
+
+  }
+
+  function handleLogout(){
+    onLogout();
   }
 
   return (
@@ -21,21 +85,24 @@ export default function Profile() {
       <div className='profile__content'>
         <h1 className="profile__title">Привет, {name}!</h1>
 
-        <form className="profile__form" >
+        <form className="profile__form" method="post" onSubmit={handleFormSubmit} >
           <div className='profile__formgroup'>
             <label className="profile__label" htmlFor='name'>Имя</label>
-            <input className="profile__input" id='name' value={name} onChange={handleUserChange} type="text" />
+            <input onBlur={handleBlur} className="profile__input" id='name' value={name} onChange={handleUserChange} type="text" />
           </div>
+          {nameDirty && <p className="profile__input-error">{errorName}</p>}
           <div className='profile__formgroup'>
             <label className="profile__label" htmlFor='email'>E-mail</label>
-            <input className="profile__input" id='email' value={email} onChange={handleEmailChange} type="email" />
+            <input onBlur={handleBlur} className="profile__input" id='email' value={email} onChange={handleEmailChange} type="email" />
           </div>
+          {emailDirty && <p className="profile__input-error">{errorEmail}</p>}
+          <p>{successMessage}</p>
             <div className="profile__button-group">
-                <button className="profile__submit" type='submit'>Редактировать</button>
-            </div>
-          
+                <button className="profile__submit" type='submit' disabled={disableSubmit} >Редактировать</button>
+            </div>          
         </form>
-        <Link className="profile__signout" to='/singout'>Выйти из аккаунта</Link>
+        
+        <button className="profile__signout" onClick={handleLogout}>Выйти из аккаунта</button>
       </div>
     </div>
   );

@@ -1,10 +1,17 @@
 import './MoviesCard.css';
-import moviePicture from '../../images/movie-1.jpg';
 
-export default function MoviesCard ({ name ='', saved = false, duration='', enableDelete}){
+export default function MoviesCard ({ name ='', movieId, saved = false, duration='', enableDelete, image, onMovieSave, trailer}){
+
+    function handleClickSaveMovie(evt){
+        if (enableDelete) {
+            onMovieSave(movieId, true);
+        } else {
+            onMovieSave(movieId, saved);
+        }
+        
+    }
 
     let iconType = '';
-    console.log(enableDelete);
     if(enableDelete === true) {
         iconType = 'movie-card__icon_type_delete'; 
     }else if (saved){
@@ -15,10 +22,13 @@ export default function MoviesCard ({ name ='', saved = false, duration='', enab
 
     return(
         <div className="movie-card">
-            <img className="movie-card__image" src={moviePicture} alt="{name}" />
+            <a href={trailer} target="_blank" rel="noreferrer">
+                <img className="movie-card__image" src={image} alt={name} />
+            </a>
+            
             <div className="movie-card__title-wrapper">
                 <h2 className="movie-card__title">{name}</h2>
-                <button className={'movie-card__icon ' + iconType }></button>
+                <button className={'movie-card__icon ' + iconType } onClick={handleClickSaveMovie}></button>
             </div>
             
             <p className="movie-card__duration">{duration}</p>
